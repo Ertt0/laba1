@@ -1,18 +1,26 @@
 class ToolkitErrors(Exception):
-    pass
+    '''Общий класс для ошибок пакета toolkit'''
+
 class EmptyExpressionError(ToolkitErrors):
-    pass
+    '''Возникает при пустом выражении'''
+
 class UnknownSymbolError(ToolkitErrors):
-    pass
+    '''Возникает при наличии неизвестного символа в выражении'''
+
 class MissingOperator(ToolkitErrors):
-    pass
+    '''Возникает при отсутствии необходимого оператора'''
+
 class TwoBinarOperator(ToolkitErrors):
-    pass
+    '''Возникает при наличии двух бинарных операторов подряд'''
+
 class DivisionByZeroError(ToolkitErrors):
-    pass
+    '''Возникает при попытке деления на ноль'''
+
 class UnknownUnitError(ToolkitErrors):
-    pass
+    '''Возникает при введении неизвестной единицы измерения'''
+
 class IncompatibleUnitsError(ToolkitErrors):
-    pass
+    '''Возникает при попытке конвертации между несовместимыми единицами'''
+
 class AbsoluteZeroError(ToolkitErrors):
-    pass
+    '''Возникает при значении температуры ниже абсолютного нуля'''
