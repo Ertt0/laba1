@@ -34,7 +34,7 @@ def validation(tokens: list[str]) -> None:
                     i += 1
                 except ValueError:
                     if i == 0:
-                        raise MissingOperator('Ожидалось число или унарный оператор') # хз как понять какую ошибку выдавать
+                        raise MissingOperator('Ожидалось число или унарный оператор')
                     if i > 0:
                         raise TwoBinarOperator('Два бинарных оператора подряд')
         else:

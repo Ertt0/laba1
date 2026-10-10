@@ -89,6 +89,10 @@ def test_convertation_absolute_zero() -> None:
 def test_convertation_valid_temp() -> None:
     assert convertation(290.15, 'k', 'c') == 17.0
 
+
+def test_calculation_valid_new() -> None:
+    assert calculation(['6', '*', '7', '*', '10']) == 420.0
+
 def test_calculation_division_by_zero() -> None:
     with pytest.raises(DivisionByZeroError):
         calculation(['6', '/', '0'])

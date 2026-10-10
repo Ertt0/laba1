@@ -24,3 +24,6 @@ class IncompatibleUnitsError(ToolkitErrors):
 
 class AbsoluteZeroError(ToolkitErrors):
     '''Возникает при значении температуры ниже абсолютного нуля'''
+
+class InvalidValueError(ToolkitErrors):
+    '''Возникает при неверном значении входных данных'''

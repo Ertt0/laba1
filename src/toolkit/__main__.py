@@ -2,14 +2,14 @@ import argparse
 import sys
 
 from toolkit.converter import convertation
-from toolkit.errors import ToolkitErrors
+from toolkit.errors import InvalidValueError, ToolkitErrors
 from toolkit.pipeline import pipeline
 
 
 def main() -> None:
     '''Обрабатывает аргументы командной строки и запускает нужную команду'''
 
-    parser = argparse.ArgumentParser(prog='toolkit', description='...')
+    parser = argparse.ArgumentParser(prog='toolkit', description='Калькулятор и конвертер физических величин')
 
     subparsers = parser.add_subparsers(dest='command')
 
@@ -27,7 +27,11 @@ def main() -> None:
         if args.command == 'calc':
             print(pipeline(args.expr))
         elif args.command == 'convert':
-            print(convertation(float(args.value), args.from_unit, args.to_unit))
+            try:
+                value = float(args.value)
+            except ValueError:
+                raise InvalidValueError('Неверное значение для конвертации')
+            print(convertation(value, args.from_unit, args.to_unit))
     except ToolkitErrors as error:
         print(f"Ошибка: {error}", file=sys.stderr)
         sys.exit(2)

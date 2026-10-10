@@ -29,52 +29,38 @@ def merge_unary(tokens:list[str]) -> list[str]:
 def calculation(expr:list[str]) -> float:
     '''Вычисляет значение арифметического выражения'''
 
-    expr = merge_unary(expr)
-    res_expr = []
+    res_expr: list[float | str] = list(merge_unary(expr))
 
-    if expr[0] in UNIVERSAL_OPERATORS:
-        res_expr.append(expr[0]+expr[1])
-        i = 2
-    else:
-        res_expr.append(expr[0])
-        i = 1
-
-    while i < len(expr):
-        if expr[i] in UNIVERSAL_OPERATORS and expr[i-1] in UNIVERSAL_OPERATORS + BINAR_OPERATORS:
-            res_expr.append(expr[i]+expr[i+1])
-            i += 2
-        else:
-            res_expr.append(expr[i])
-            i += 1
-
-    j = 0
-    res_expr_1: list[float | str] = []
-    while j < len(res_expr):
-        if res_expr[j] not in BINAR_OPERATORS + UNIVERSAL_OPERATORS:
-            if j+1 < len(res_expr) and res_expr[j+1] == '*':
-                res_expr_1.append(float(res_expr[j]) * float(res_expr[j+2]))
-                j += 3
-            elif j+1 < len(res_expr) and res_expr[j+1] == '/':
-                if float(res_expr[j+2]) == 0:
-                    raise DivisionByZeroError('Нельзя делить на ноль')
-                res_expr_1.append(float(res_expr[j]) / float(res_expr[j+2]))
-                j += 3
+    while '*' in res_expr or '/' in res_expr:
+        j = 0
+        res_expr_1: list[float | str] = []
+        while j < len(res_expr):
+            if res_expr[j] not in BINAR_OPERATORS + UNIVERSAL_OPERATORS:
+                if j+1 < len(res_expr) and res_expr[j+1] == '*':
+                    res_expr_1.append(float(res_expr[j]) * float(res_expr[j+2]))
+                    j += 3
+                elif j+1 < len(res_expr) and res_expr[j+1] == '/':
+                    if float(res_expr[j+2]) == 0:
+                        raise DivisionByZeroError('Нельзя делить на ноль')
+                    res_expr_1.append(float(res_expr[j]) / float(res_expr[j+2]))
+                    j += 3
+                else:
+                    res_expr_1.append(float(res_expr[j]))
+                    j += 1
             else:
-                res_expr_1.append(float(res_expr[j]))
+                res_expr_1.append(res_expr[j])
                 j += 1
-        else:
-            res_expr_1.append(res_expr[j])
-            j += 1
+        res_expr = res_expr_1
 
-    result = float(res_expr_1[0])
+    result = float(res_expr[0])
     j = 1
 
-    while j < len(res_expr_1):
-        if res_expr_1[j] == '+':
-            result += float(res_expr_1[j+1])
+    while j < len(res_expr):
+        if res_expr[j] == '+':
+            result += float(res_expr[j+1])
             j += 2
-        elif res_expr_1[j] == '-':
-            result -= float(res_expr_1[j+1])
+        elif res_expr[j] == '-':
+            result -= float(res_expr[j+1])
             j += 2
 
     return result
